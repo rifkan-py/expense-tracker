@@ -2,15 +2,28 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-	"time"
+
+	"github.com/gorilla/mux"
+	"github.com/rifkan-py/expense-tracker/controllers"
 )
 
-func greet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World! %s", time.Now())
+func main() {
+	// load configurations from config.json
+	LoadConfig()
+
+	router := mux.NewRouter().StrictSlash(true)
+
+	// registered routes
+	RegisterIncomeRoutes(router)
+
+	// start the servers
+	log.Printf(fmt.Sprintf("Starting the server on port %s", AppConfig.Port))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", AppConfig.Port), router))
 }
 
-func main() {
-	http.HandleFunc("/", greet)
-	http.ListenAndServe(":8080", nil)
+func RegisterIncomeRoutes(router *mux.Router) {
+	router.HandleFunc("/api/incomes", controllers.GetIncomes).Methods("GET")
+	router.HandleFunc("/api/incomes", controllers.CreateIncome).Methods("POST")
 }
