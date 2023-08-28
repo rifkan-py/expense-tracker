@@ -1,4 +1,4 @@
 {
-  "connection_string": "root@root@tcp(127.0.0.1:3306)/expense-tracker",
+  "connection_string": "root:P@$$w0rd@tcp(127.0.0.1:3306)/ExpenseTracker?parseTime=true",
   "port": 8080
 }

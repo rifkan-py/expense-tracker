@@ -13,7 +13,7 @@ type Config struct {
 
 var AppConfig *Config
 
-func LoadConfig() {
+func LoadAppConfig() {
 	log.Println("Loading server configuration ...")
 
 	viper.AddConfigPath(".")
@@ -26,7 +26,7 @@ func LoadConfig() {
 		log.Fatal(err)
 	}
 
-	err = viper.Unmarshal((&AppConfig))
+	err = viper.Unmarshal(&AppConfig)
 	if err != nil {
 		log.Fatal(err)
 	}

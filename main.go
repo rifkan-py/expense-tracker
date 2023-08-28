@@ -7,11 +7,18 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/rifkan-py/expense-tracker/controllers"
+	"github.com/rifkan-py/expense-tracker/database"
+	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func main() {
-	// load configurations from config.json
-	LoadConfig()
+
+	LoadAppConfig()
+
+	database.Connect(AppConfig.ConnectionString)
+	database.Migrate()
 
 	router := mux.NewRouter().StrictSlash(true)
 
